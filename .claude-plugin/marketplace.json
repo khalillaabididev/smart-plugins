@@ -1,12 +1,22 @@
 {
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "SmartOzzehir",
-  "version": 1,
-  "plugins": {
-    "pr-patrol": {
+  "description": "PR Patrol - Handle bot comments on your PRs",
+  "owner": {
+    "name": "Mart",
+    "email": "mart@smartozzehir.com"
+  },
+  "plugins": [
+    {
       "name": "pr-patrol",
-      "version": "1.0.0",
       "description": "Patrol your PRs for bot comments (CodeRabbit, Greptile, Copilot, Codex, Sentry) - batch validation with 7-gate workflow",
-      "path": "."
+      "version": "1.0.0",
+      "author": {
+        "name": "Mart",
+        "email": "mart@smartozzehir.com"
+      },
+      "source": ".",
+      "category": "development"
     }
-  }
+  ]
 }
