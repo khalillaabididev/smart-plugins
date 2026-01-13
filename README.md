@@ -39,7 +39,8 @@ claude plugin install pr-patrol@SmartOzzehir
 ## Usage
 
 ```bash
-/pr-patrol [PR-number]
+/pr-patrol [PR-number]    # Process bot comments
+/pr-patrol:update         # Update plugin to latest version
 ```
 
 If no PR number is provided, auto-detects from current branch.

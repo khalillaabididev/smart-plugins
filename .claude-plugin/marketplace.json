@@ -8,7 +8,7 @@
     {
       "name": "pr-patrol",
       "description": "Handle PR bot comments with batch validation and 7-gate workflow",
-      "version": "1.1.1",
+      "version": "1.2.0",
       "source": "./"
     }
   ]
