@@ -1,0 +1,11 @@
+# State files are project-local, not plugin files
+.claude/bot-reviews/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor files
+*.swp
+*.swo
+*~
