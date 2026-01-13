@@ -1,23 +1,8 @@
 {
   "name": "pr-patrol",
   "version": "1.1.0",
-  "description": "Patrol your PRs for bot comments (CodeRabbit, Greptile, Copilot, Codex, Sentry) - batch validation with 7-gate workflow",
-  "author": {
-    "name": "Mart",
-    "url": "https://github.com/SmartOzzehir"
-  },
+  "description": "Handle PR bot comments with batch validation and 7-gate workflow",
   "repository": "https://github.com/SmartOzzehir/pr-patrol",
   "license": "MIT",
-  "keywords": [
-    "pr-patrol",
-    "pr-review",
-    "code-review",
-    "github",
-    "coderabbit",
-    "greptile",
-    "copilot",
-    "codex",
-    "sentry",
-    "bot-comments"
-  ]
+  "keywords": ["pr-review", "code-review", "github", "coderabbit", "greptile", "copilot"]
 }
