@@ -20,8 +20,8 @@
 
 ```bash
 SCRIPTS="${CLAUDE_PLUGIN_ROOT}/skills/pr-patrol/scripts"
-OWNER="SmartOzzehir"  # From state file
-REPO="prospera"       # From state file
+OWNER="your-org"  # From state file
+REPO="my-project"       # From state file
 PR="32"               # From state file
 
 # Fetch and normalize all comments

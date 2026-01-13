@@ -287,9 +287,9 @@ After cycle completion:
 ```yaml
 ---
 pr_number: 32
-branch: feature/phase-09.7-configurable-values
-owner: SmartOzzehir
-repo: prospera
+branch: feature/my-feature
+owner: your-org
+repo: my-project
 created: 2026-01-13T09:00:00Z
 last_updated: 2026-01-13T14:30:00Z
 current_cycle: 1

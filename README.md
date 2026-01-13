@@ -100,9 +100,13 @@ Core workflow logic with 7 phase files for progressive disclosure:
 - `bot-formats.md` - Bot-specific API protocols
 - `templates.md` - Reply message templates
 
-### Agent: `bot-comment-validator`
+### Agents
 
-Validates individual bot comments against actual code context. Returns structured verdicts (VALID, FALSE_POSITIVE, NEEDS_CLARIFICATION).
+| Agent | Purpose |
+|-------|---------|
+| `bot-comment-validator` | Validates bot comments against actual code context |
+| `pr-fix-architect` | Designs optimal fixes for validated issues |
+| `pr-implementer` | Applies approved fixes with precision |
 
 ### Scripts
 
@@ -119,14 +123,6 @@ Validates individual bot comments against actual code context. Returns structure
 No configuration required. The plugin uses:
 - `gh` CLI for GitHub API authentication
 - Project's `AGENTS.md` and `CLAUDE.md` for convention detection
-
-## External Dependencies
-
-This plugin references general-purpose agents that should exist in your `~/.claude/agents/`:
-- `pr-fix-architect` - Designs optimal fixes for validated issues
-- `pr-implementer` - Applies approved fixes with precision
-
-These agents are not bundled because they're useful beyond the pr-patrol context.
 
 ## License
 
