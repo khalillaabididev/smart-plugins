@@ -1,6 +1,6 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
-  "name": "SmartOzzehir",
+  "name": "smart-plugins",
   "description": "Smart Plugins - A collection of Claude Code plugins for enhanced development workflows",
   "owner": {
     "name": "SmartOzzehir"
