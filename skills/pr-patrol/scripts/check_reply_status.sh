@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # check_reply_status.sh - Check which bot comments have been replied to
 # Usage: ./check_reply_status.sh <owner> <repo> <pr>
 #
@@ -7,7 +7,7 @@
 #   - pending: Comments waiting for user reply (excluding Copilot)
 #   - copilot_silent: Copilot comments (no reply needed)
 
-set -e
+set -euo pipefail
 
 OWNER="${1:?Usage: $0 <owner> <repo> <pr>}"
 REPO="${2:?Usage: $0 <owner> <repo> <pr>}"
@@ -16,13 +16,27 @@ PR="${3:?Usage: $0 <owner> <repo> <pr>}"
 # Get script directory for jq library path
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-# Sequential fetch from both endpoints
-# IMPORTANT: Do NOT use parallel { cmd & cmd & wait } pattern here!
-# Background processes can interleave stdout bytes, corrupting JSON.
+# Temporary file for error capture
+STDERR_FILE=$(mktemp)
+trap 'rm -f "$STDERR_FILE"' EXIT
+
+# Fetch PR review comments with error handling
+if ! PR_COMMENTS=$(gh api "repos/$OWNER/$REPO/pulls/$PR/comments" --paginate 2>"$STDERR_FILE"); then
+  echo "Error: Failed to fetch PR comments: $(cat "$STDERR_FILE")" >&2
+  exit 1
+fi
+
+# Fetch issue comments with error handling
+if ! ISSUE_COMMENTS=$(gh api "repos/$OWNER/$REPO/issues/$PR/comments" --paginate 2>"$STDERR_FILE"); then
+  echo "Error: Failed to fetch issue comments: $(cat "$STDERR_FILE")" >&2
+  exit 1
+fi
+
+# Combine and process
 {
-  gh api "repos/$OWNER/$REPO/pulls/$PR/comments" --paginate
-  gh api "repos/$OWNER/$REPO/issues/$PR/comments" --paginate
-} 2>/dev/null | jq -s -L "$SCRIPT_DIR" '
+  echo "$PR_COMMENTS"
+  echo "$ISSUE_COMMENTS"
+} | jq -s -L "$SCRIPT_DIR" '
 include "bot-detection";
 
 add |

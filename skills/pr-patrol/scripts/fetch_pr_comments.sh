@@ -33,17 +33,21 @@ fi
 # IMPORTANT: Do NOT use parallel { cmd & cmd & wait } pattern here!
 # Background processes can interleave stdout bytes, corrupting JSON.
 
+# Temporary file for error capture
+STDERR_FILE=$(mktemp)
+trap 'rm -f "$STDERR_FILE"' EXIT
+
 # Fetch PR review comments (line-level)
-PR_COMMENTS=$(gh api "repos/$OWNER/$REPO/pulls/$PR/comments" --paginate 2>&1) || {
-  echo "Error fetching PR comments: $PR_COMMENTS" >&2
+if ! PR_COMMENTS=$(gh api "repos/$OWNER/$REPO/pulls/$PR/comments" --paginate 2>"$STDERR_FILE"); then
+  echo "Error fetching PR comments: $(cat "$STDERR_FILE")" >&2
   exit 1
-}
+fi
 
 # Fetch issue comments (conversation-level)
-ISSUE_COMMENTS=$(gh api "repos/$OWNER/$REPO/issues/$PR/comments" --paginate 2>&1) || {
-  echo "Error fetching issue comments: $ISSUE_COMMENTS" >&2
+if ! ISSUE_COMMENTS=$(gh api "repos/$OWNER/$REPO/issues/$PR/comments" --paginate 2>"$STDERR_FILE"); then
+  echo "Error fetching issue comments: $(cat "$STDERR_FILE")" >&2
   exit 1
-}
+fi
 
 # Combine and normalize
 {

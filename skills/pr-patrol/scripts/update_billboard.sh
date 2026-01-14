@@ -51,6 +51,9 @@ NEW_BILLBOARD="| Field | Value |
 | **Next Action** | Read \`phases/$GATE_FILE\` |"
 
 # Use awk to replace the billboard table
+TMP_FILE="${STATE_FILE}.tmp.$$"
+trap 'rm -f "$TMP_FILE"' EXIT
+
 awk -v new_billboard="$NEW_BILLBOARD" '
   /^# ⚠️ WORKFLOW ACTIVE/ {
     print;
@@ -72,6 +75,23 @@ awk -v new_billboard="$NEW_BILLBOARD" '
     next
   }
   { print }
-' "$STATE_FILE" > "${STATE_FILE}.tmp" && mv "${STATE_FILE}.tmp" "$STATE_FILE"
+' "$STATE_FILE" > "$TMP_FILE"
+
+# Validate awk output before replacing original
+if [[ ! -s "$TMP_FILE" ]]; then
+  echo "Error: awk produced empty output, state file not updated" >&2
+  exit 1
+fi
+
+# Check that the temp file has at least as many lines as original (sanity check)
+ORIG_LINES=$(wc -l < "$STATE_FILE")
+NEW_LINES=$(wc -l < "$TMP_FILE")
+if [[ "$NEW_LINES" -lt "$((ORIG_LINES / 2))" ]]; then
+  echo "Error: awk output suspiciously small ($NEW_LINES lines vs $ORIG_LINES), aborting" >&2
+  exit 1
+fi
+
+mv "$TMP_FILE" "$STATE_FILE"
+trap - EXIT  # Clear the trap since we successfully moved the file
 
 echo "✅ Billboard updated: status=$STATUS, next_gate=$NEXT_GATE"

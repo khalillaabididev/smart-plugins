@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # detect_thread_states.sh - Detect thread states for bot comments
 # Usage: ./fetch_pr_comments.sh owner repo pr | ./detect_thread_states.sh
 #
@@ -11,6 +11,8 @@
 #   RESOLVED - Bot response indicates approval
 #   REJECTED - Bot response indicates rejection
 
+set -euo pipefail
+
 # Get script directory for relative jq file path
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 JQ_FILE="$SCRIPT_DIR/detect_states.jq"
@@ -21,4 +23,14 @@ if [[ ! -f "$JQ_FILE" ]]; then
   exit 1
 fi
 
-jq -f "$JQ_FILE"
+# Read stdin into variable to validate before processing
+INPUT=$(cat)
+
+# Validate input is valid JSON
+if ! echo "$INPUT" | jq empty 2>/dev/null; then
+  echo "Error: Invalid JSON input" >&2
+  exit 1
+fi
+
+# Process with jq
+echo "$INPUT" | jq -f "$JQ_FILE"

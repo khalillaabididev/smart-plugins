@@ -28,15 +28,17 @@ PR_NUMBER=$(grep "^pr_number:" "$STATE_FILE" | cut -d' ' -f2)
 COMMIT_SHA=$(grep "^last_push_commit:" "$STATE_FILE" | head -1 | cut -d' ' -f2 || echo "unknown")
 
 # Count FIXED items (lines with ✅ in Fix Applied column)
-FIXED_COUNT=$(grep -c "| ✅" "$STATE_FILE" 2>/dev/null || echo "0")
+# grep returns 1 if no matches, which is not an error for us
+FIXED_COUNT=$(grep -c "| ✅" "$STATE_FILE" || true)
+[[ -z "$FIXED_COUNT" ]] && FIXED_COUNT=0
 
-# Count FALSE_POSITIVE items (look for FALSE_POSITIVE section)
-FP_COUNT=$(awk '/^### FALSE_POSITIVE/,/^###/{if(/^\|.*\|.*\|.*\|/) count++} END{print count-1}' "$STATE_FILE" 2>/dev/null || echo "0")
-[[ "$FP_COUNT" -lt 0 ]] && FP_COUNT=0
+# Count FALSE_POSITIVE items (look for FALSE_POSITIVE or VALID sections - updated naming)
+FP_COUNT=$(awk '/^### FALSE_POSITIVE/,/^###/{if(/^\|.*\|.*\|.*\|/) count++} END{print count-1}' "$STATE_FILE" || true)
+[[ -z "$FP_COUNT" || "$FP_COUNT" -lt 0 ]] && FP_COUNT=0
 
-# Extract fixed issues (file and summary from FIXED table)
+# Extract fixed issues (file and summary from VALID/FIXED table)
 FIXED_LIST=$(awk '
-  /^### FIXED/,/^###/ {
+  /^### (FIXED|VALID)/,/^###/ {
     if (/^\| [^-]/ && !/^\| ID/) {
       split($0, cols, "|")
       gsub(/^[ \t]+|[ \t]+$/, "", cols[4])  # File
@@ -46,7 +48,7 @@ FIXED_LIST=$(awk '
       }
     }
   }
-' "$STATE_FILE" 2>/dev/null || echo "")
+' "$STATE_FILE" || true)
 
 # Extract false positives
 FP_LIST=$(awk '
@@ -61,7 +63,7 @@ FP_LIST=$(awk '
       }
     }
   }
-' "$STATE_FILE" 2>/dev/null || echo "")
+' "$STATE_FILE" || true)
 
 # Build the summary comment
 cat << EOF

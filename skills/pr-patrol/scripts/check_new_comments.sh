@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # check_new_comments.sh - Check for new bot comments since last push
 # Usage: ./check_new_comments.sh <owner> <repo> <pr> [since_timestamp]
 #
@@ -9,7 +9,7 @@
 #   - summary: Count by bot
 #   - needs_review: true if any new comments found
 
-set -e
+set -euo pipefail
 
 OWNER="${1:?Usage: $0 <owner> <repo> <pr> [since_timestamp]}"
 REPO="${2:?Usage: $0 <owner> <repo> <pr> [since_timestamp]}"
@@ -20,23 +20,44 @@ SINCE="${4:-}"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # If no timestamp provided, get from last push
-if [ -z "$SINCE" ]; then
-  SINCE=$(git log -1 --format=%cI "origin/$(git rev-parse --abbrev-ref HEAD)" 2>/dev/null || echo "1970-01-01T00:00:00Z")
+if [[ -z "$SINCE" ]]; then
+  SINCE=$(git log -1 --format=%cI "origin/$(git rev-parse --abbrev-ref HEAD)" 2>/dev/null) || {
+    echo "Warning: Could not get last push time, using epoch" >&2
+    SINCE="1970-01-01T00:00:00Z"
+  }
 fi
 
 # CRITICAL: Normalize timestamp to UTC for consistent comparison
 # GitHub API returns timestamps in UTC (Z suffix)
 # But local timestamps may have timezone offset (+03:00)
 # String comparison fails: "11:30Z" vs "14:22+03:00" → 11 < 14 (WRONG!)
-SINCE=$(date -u -d "$SINCE" +"%Y-%m-%dT%H:%M:%SZ" 2>/dev/null || echo "$SINCE")
+if ! SINCE_NORMALIZED=$(date -u -d "$SINCE" +"%Y-%m-%dT%H:%M:%SZ" 2>&1); then
+  echo "Warning: Could not normalize timestamp '$SINCE', using as-is" >&2
+  SINCE_NORMALIZED="$SINCE"
+fi
+SINCE="$SINCE_NORMALIZED"
 
-# Sequential fetch from both endpoints
-# IMPORTANT: Do NOT use parallel { cmd & cmd & wait } pattern here!
-# Background processes can interleave stdout bytes, corrupting JSON.
+# Temporary file for error capture
+STDERR_FILE=$(mktemp)
+trap 'rm -f "$STDERR_FILE"' EXIT
+
+# Fetch PR review comments with error handling
+if ! PR_COMMENTS=$(gh api "repos/$OWNER/$REPO/pulls/$PR/comments" --paginate 2>"$STDERR_FILE"); then
+  echo "Error: Failed to fetch PR comments: $(cat "$STDERR_FILE")" >&2
+  exit 1
+fi
+
+# Fetch issue comments with error handling
+if ! ISSUE_COMMENTS=$(gh api "repos/$OWNER/$REPO/issues/$PR/comments" --paginate 2>"$STDERR_FILE"); then
+  echo "Error: Failed to fetch issue comments: $(cat "$STDERR_FILE")" >&2
+  exit 1
+fi
+
+# Combine and process
 {
-  gh api "repos/$OWNER/$REPO/pulls/$PR/comments" --paginate
-  gh api "repos/$OWNER/$REPO/issues/$PR/comments" --paginate
-} 2>/dev/null | jq -s -L "$SCRIPT_DIR" --arg since "$SINCE" '
+  echo "$PR_COMMENTS"
+  echo "$ISSUE_COMMENTS"
+} | jq -s -L "$SCRIPT_DIR" --arg since "$SINCE" '
 include "bot-detection";
 
 add |

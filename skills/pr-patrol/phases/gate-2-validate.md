@@ -41,10 +41,10 @@ Read the file and determine:
 Return JSON:
 {
   "comment_id": 123456,
-  "verdict": "real_issue" | "false_positive" | "uncertain",
+  "verdict": "VALID" | "FALSE_POSITIVE" | "NEEDS_CLARIFICATION",
   "confidence": 0.85,
   "reasoning": "...",
-  "suggested_fix": "..." (if real issue)
+  "suggested_fix": "..." (if VALID)
 }
   </prompt>
 </Task>
@@ -79,7 +79,7 @@ Each agent returns:
 ```json
 {
   "comment_id": 123456,
-  "verdict": "real_issue",
+  "verdict": "VALID",
   "confidence": 0.85,
   "reasoning": "The function indeed expects UUID but receives text code...",
   "suggested_fix": "Use customer.regionId ?? customer.region"
@@ -90,9 +90,9 @@ Each agent returns:
 
 | Verdict | Meaning | Action |
 |---------|---------|--------|
-| `real_issue` | Bot correctly identified a problem | Add to fix queue |
-| `false_positive` | Bot was wrong | Mark for dismissal reply |
-| `uncertain` | Agent not confident | Escalate to user |
+| `VALID` | Bot correctly identified a problem | Add to fix queue |
+| `FALSE_POSITIVE` | Bot was wrong | Mark for dismissal reply |
+| `NEEDS_CLARIFICATION` | Agent not confident | Escalate to user |
 
 ---
 
@@ -118,9 +118,9 @@ Options:
 
 | Case | Detection | Action |
 |------|-----------|--------|
-| All false positives | `real_issues.length == 0` | Skip to Gate 5 (replies) |
+| All false positives | No `VALID` verdicts | Skip to Gate 5 (replies) |
 | Validator timeout | No response in 60s | Retry/Skip/Manual |
-| Validator uncertain | `confidence < 0.6` | Escalate to user with AskUserQuestion |
+| Validator uncertain | `NEEDS_CLARIFICATION` returned | Escalate to user with AskUserQuestion |
 
 ---
 
@@ -129,14 +129,14 @@ Options:
 Update the validation results:
 
 ```markdown
-### FIXED - Real Issues ({count})
+### VALID - Real Issues ({count})
 | ID | Bot | File | Severity | Summary | Fix Applied |
 |----|-----|------|----------|---------|-------------|
 | 123 | coderabbitai[bot] | customer-list.tsx | HIGH | UUID vs text mismatch | Pending |
 
-### VALIDATED - False Positives ({count})
-| ID | Bot | File | Summary | Verdict |
-|----|-----|------|---------|---------|
+### FALSE_POSITIVE ({count})
+| ID | Bot | File | Summary | Reason |
+|----|-----|------|---------|--------|
 | 456 | Copilot | config.ts | Type enum suggestion | Code is correct |
 ```
 
