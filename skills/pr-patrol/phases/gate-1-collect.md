@@ -201,17 +201,20 @@ Update the Summary section:
 - RESOLVED: {resolved_count}
 ```
 
-Update status:
+Update status and billboard:
 
 ```bash
 SCRIPTS="${CLAUDE_PLUGIN_ROOT}/skills/pr-patrol/scripts"
-"$SCRIPTS/update_state.sh" ".claude/bot-reviews/PR-${PR}.md" status collected
+STATE_FILE=".claude/bot-reviews/PR-${PR}.md"
+
+# Update billboard (status + next gate info)
+"$SCRIPTS/update_billboard.sh" "$STATE_FILE" "collected" "2" "Validate comments with bot-comment-validator agent"
 ```
 
 ---
 
 ## After This Phase
 
-1. Update state file: `status: collected`
-2. Proceed to: **Gate 2 (Validation)**
-3. Read: `phases/gate-2-validate.md`
+1. ✅ Billboard updated: `status: collected`, `next_gate: 2`
+2. **IMMEDIATELY** read: `phases/gate-2-validate.md`
+3. Do NOT stop or wait - continue to Gate 2!

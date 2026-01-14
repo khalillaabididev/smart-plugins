@@ -157,26 +157,26 @@ Update status: `checks_passed`
 
 ## State File Update
 
-Update status progression:
+Update status progression and billboard:
 
 ```bash
 SCRIPTS="${CLAUDE_PLUGIN_ROOT}/skills/pr-patrol/scripts"
-STATE=".claude/bot-reviews/PR-${PR}.md"
+STATE_FILE=".claude/bot-reviews/PR-${PR}.md"
 
 # After plan approval
-"$SCRIPTS/update_state.sh" "$STATE" status fixes_planned
+"$SCRIPTS/update_state.sh" "$STATE_FILE" status fixes_planned
 
 # After fixes applied
-"$SCRIPTS/update_state.sh" "$STATE" status fixes_applied
+"$SCRIPTS/update_state.sh" "$STATE_FILE" status fixes_applied
 
-# After checks pass
-"$SCRIPTS/update_state.sh" "$STATE" status checks_passed
+# After checks pass - update billboard for Gate 4
+"$SCRIPTS/update_billboard.sh" "$STATE_FILE" "checks_passed" "4" "Review changes and create commit"
 ```
 
 ---
 
 ## After This Phase
 
-1. Ensure `status: checks_passed`
-2. Proceed to: **Gate 4 (Review & Commit)**
-3. Read: `phases/gate-4-commit.md`
+1. ✅ Billboard updated: `status: checks_passed`, `next_gate: 4`
+2. **IMMEDIATELY** read: `phases/gate-4-commit.md`
+3. Do NOT stop or wait - continue to Gate 4!

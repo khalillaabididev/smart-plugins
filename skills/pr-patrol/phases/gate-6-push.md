@@ -67,16 +67,16 @@ git log origin/HEAD -1 --oneline
 
 ```bash
 SCRIPTS="${CLAUDE_PLUGIN_ROOT}/skills/pr-patrol/scripts"
-STATE=".claude/bot-reviews/PR-${PR}.md"
+STATE_FILE=".claude/bot-reviews/PR-${PR}.md"
 
 # Update push timestamp
-"$SCRIPTS/update_state.sh" "$STATE" last_push_at "$(date -Iseconds)"
+"$SCRIPTS/update_state.sh" "$STATE_FILE" last_push_at "$(date -Iseconds)"
 
 # Update push commit SHA
-"$SCRIPTS/update_state.sh" "$STATE" last_push_commit "$(git rev-parse HEAD)"
+"$SCRIPTS/update_state.sh" "$STATE_FILE" last_push_commit "$(git rev-parse HEAD)"
 
-# Update status
-"$SCRIPTS/update_state.sh" "$STATE" status pushed
+# Update billboard - workflow complete (no next gate)
+"$SCRIPTS/update_billboard.sh" "$STATE_FILE" "pushed" "✓" "Cycle complete - check for new comments or done"
 ```
 
 ---
@@ -209,15 +209,15 @@ Options:
 ### Step A: Update State File
 ```bash
 SCRIPTS="${CLAUDE_PLUGIN_ROOT}/skills/pr-patrol/scripts"
-STATE=".claude/bot-reviews/PR-${PR}.md"
+STATE_FILE=".claude/bot-reviews/PR-${PR}.md"
 
 # Increment cycle number
-CURRENT=$(grep "^current_cycle:" "$STATE" | cut -d' ' -f2)
+CURRENT=$(grep "^current_cycle:" "$STATE_FILE" | cut -d' ' -f2)
 NEXT=$((CURRENT + 1))
-"$SCRIPTS/update_state.sh" "$STATE" current_cycle "$NEXT"
+"$SCRIPTS/update_state.sh" "$STATE_FILE" current_cycle "$NEXT"
 
-# Reset status for new cycle
-"$SCRIPTS/update_state.sh" "$STATE" status initialized
+# Reset billboard for new cycle - back to Gate 1
+"$SCRIPTS/update_billboard.sh" "$STATE_FILE" "initialized" "1" "Collect new bot comments for Cycle $NEXT"
 ```
 
 ### Step B: Read Gate 1 Instructions

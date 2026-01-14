@@ -111,13 +111,14 @@ After commit:
 
 ```bash
 SCRIPTS="${CLAUDE_PLUGIN_ROOT}/skills/pr-patrol/scripts"
-STATE=".claude/bot-reviews/PR-${PR}.md"
-
-# Update status
-"$SCRIPTS/update_state.sh" "$STATE" status committed
+STATE_FILE=".claude/bot-reviews/PR-${PR}.md"
 
 # Record commit SHA in state file (for replies)
 COMMIT_SHA=$(git rev-parse --short HEAD)
+
+# Update billboard for Gate 5
+"$SCRIPTS/update_billboard.sh" "$STATE_FILE" "committed" "5" "Post replies to bot comments"
+
 # Update FIXED table with commit SHA
 ```
 
@@ -134,7 +135,6 @@ Update the FIXED table:
 
 ## After This Phase
 
-1. Update state file: `status: committed`
-2. Record commit SHA
-3. Proceed to: **Gate 5 (Reply Approval)**
-4. Read: `phases/gate-5-reply.md`
+1. ✅ Billboard updated: `status: committed`, `next_gate: 5`
+2. **IMMEDIATELY** read: `phases/gate-5-reply.md`
+3. Do NOT stop or wait - continue to Gate 5!

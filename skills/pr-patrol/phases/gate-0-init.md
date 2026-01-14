@@ -117,9 +117,21 @@ created: {ISO_TIMESTAMP}
 last_updated: {ISO_TIMESTAMP}
 current_cycle: 1
 status: initialized
+next_gate: 1
+next_action: Read phases/gate-1-collect.md to collect bot comments
 ---
 
-# PR #{PR_NUMBER} Bot Review State
+# ⚠️ WORKFLOW ACTIVE - PR #{PR_NUMBER} ⚠️
+
+| Field | Value |
+|-------|-------|
+| **Status** | `initialized` |
+| **Next Gate** | 1 |
+| **Next Action** | Read `phases/gate-1-collect.md` |
+
+> 📌 **REMINDER:** After completing each task, update this section!
+
+---
 
 ## Cycle 1 (Current)
 
@@ -130,10 +142,12 @@ status: initialized
 - False Positives: 0
 ```
 
+**CRITICAL:** The billboard section at the top MUST be updated after each gate!
+
 ---
 
 ## After This Phase
 
-1. Update state file: `status: initialized`
-2. Proceed to: **Gate 1 (Collection)**
-3. Read: `phases/gate-1-collect.md`
+1. ✅ State file created with billboard
+2. **IMMEDIATELY** read: `phases/gate-1-collect.md`
+3. Do NOT stop or wait - continue to Gate 1!

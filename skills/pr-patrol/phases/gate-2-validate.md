@@ -152,18 +152,27 @@ Add Validation Cache:
 }
 ```
 
-Update status:
+Update status and billboard:
 
 ```bash
 SCRIPTS="${CLAUDE_PLUGIN_ROOT}/skills/pr-patrol/scripts"
-"$SCRIPTS/update_state.sh" ".claude/bot-reviews/PR-${PR}.md" status validated
+STATE_FILE=".claude/bot-reviews/PR-${PR}.md"
+
+# If real issues found → Gate 3
+# If all false positives → Gate 5
+if [ "$REAL_ISSUES_COUNT" -gt 0 ]; then
+  "$SCRIPTS/update_billboard.sh" "$STATE_FILE" "validated" "3" "Design and apply fixes for real issues"
+else
+  "$SCRIPTS/update_billboard.sh" "$STATE_FILE" "validated" "5" "Post replies to bot comments"
+fi
 ```
 
 ---
 
 ## After This Phase
 
-1. Update state file: `status: validated`
-2. If real issues found → Proceed to: **Gate 3 (Fix Plan)**
-3. If all false positives → Skip to: **Gate 5 (Replies)**
-4. Read next: `phases/gate-3-fix.md` or `phases/gate-5-reply.md`
+1. ✅ Billboard updated: `status: validated`
+2. **IMMEDIATELY** read the next gate file:
+   - Real issues found → `phases/gate-3-fix.md`
+   - All false positives → `phases/gate-5-reply.md`
+3. Do NOT stop or wait - continue to next gate!

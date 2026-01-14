@@ -263,17 +263,16 @@ Update PENDING table:
 | 123 | coderabbitai[bot] | 2026-01-13T10:30:00Z | 456789 |
 ```
 
-After all replies:
+After all replies, update billboard:
 
 ```bash
-"$SCRIPTS/update_state.sh" "$STATE" status replies_sent
+"$SCRIPTS/update_billboard.sh" "$STATE" "replies_sent" "6" "Push to remote and complete cycle"
 ```
 
 ---
 
 ## After This Phase
 
-1. Update state file: `status: replies_sent`
-2. Update `replied_comment_ids` array
-3. Proceed to: **Gate 6 (Push & Complete)**
-4. Read: `phases/gate-6-push.md`
+1. ✅ Billboard updated: `status: replies_sent`, `next_gate: 6`
+2. **IMMEDIATELY** read: `phases/gate-6-push.md`
+3. Do NOT stop or wait - continue to Gate 6!
