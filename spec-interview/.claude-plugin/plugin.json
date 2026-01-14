@@ -1,0 +1,8 @@
+{
+  "name": "spec-interview",
+  "version": "1.0.0",
+  "description": "Interview users to gather detailed requirements for spec documents or feature ideas",
+  "repository": "https://github.com/SmartOzzehir/smart-plugins",
+  "license": "MIT",
+  "keywords": ["requirements", "spec", "interview", "planning", "documentation"]
+}

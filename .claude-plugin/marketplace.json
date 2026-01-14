@@ -1,6 +1,6 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
-  "name": "SmartOzzehir",
+  "name": "Smart Plugins",
   "owner": {
     "name": "SmartOzzehir"
   },
@@ -9,7 +9,13 @@
       "name": "pr-patrol",
       "description": "Handle PR bot comments with batch validation and 7-gate workflow",
       "version": "1.4.1",
-      "source": "./"
+      "source": "./pr-patrol"
+    },
+    {
+      "name": "spec-interview",
+      "description": "Interview users to gather detailed requirements for spec documents or feature ideas",
+      "version": "1.0.0",
+      "source": "./spec-interview"
     }
   ]
 }

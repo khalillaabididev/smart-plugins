@@ -1,0 +1,8 @@
+{
+  "name": "pr-patrol",
+  "version": "1.4.1",
+  "description": "Handle PR bot comments with batch validation and 7-gate workflow",
+  "repository": "https://github.com/SmartOzzehir/smart-plugins",
+  "license": "MIT",
+  "keywords": ["pr-review", "code-review", "github", "coderabbit", "greptile", "copilot"]
+}
