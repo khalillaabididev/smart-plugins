@@ -2,7 +2,29 @@
   "name": "spec-interview",
   "version": "2.0.0",
   "description": "Comprehensive 8-stage requirements interview with adaptive technical depth and PRD generation",
-  "repository": "https://github.com/SmartOzzehir/smart-plugins",
+  "author": {
+    "name": "SmartOzzehir",
+    "url": "https://github.com/SmartOzzehir"
+  },
+  "repository": "https://github.com/SmartOzzehir/smart-plugins/tree/main/spec-interview",
+  "homepage": "https://github.com/SmartOzzehir/smart-plugins/tree/main/spec-interview#readme",
+  "bugs": {
+    "url": "https://github.com/SmartOzzehir/smart-plugins/issues"
+  },
   "license": "MIT",
-  "keywords": ["requirements", "spec", "interview", "planning", "documentation"]
+  "engines": {
+    "claude-code": ">=1.0.0"
+  },
+  "keywords": [
+    "requirements",
+    "spec",
+    "interview",
+    "planning",
+    "documentation",
+    "prd",
+    "product",
+    "analysis",
+    "business-analyst",
+    "specification"
+  ]
 }
