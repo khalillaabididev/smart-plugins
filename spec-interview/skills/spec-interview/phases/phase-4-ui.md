@@ -116,4 +116,4 @@ Mark Phase 4 complete, Phase 5 in_progress.
 
 ## NEXT STEP
 
-**IMMEDIATELY read:** `phases/phase-5-edge-cases.md`
+**IMMEDIATELY read:** `${CLAUDE_PLUGIN_ROOT}/skills/spec-interview/phases/phase-5-edge-cases.md`

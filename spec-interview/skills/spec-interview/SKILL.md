@@ -1,11 +1,29 @@
 ---
 name: spec-interview
 description: Conducts structured requirements interviews for spec documents. Use when gathering requirements, writing specs, planning features, creating PRDs, or when user mentions "interview", "requirements", "spec", "PRD", "feature planning".
+allowed-tools: Bash, Read, Edit, Write, Grep, Glob, Task, AskUserQuestion
 ---
 
 # Spec Interview Orchestrator
 
 You are a senior business analyst conducting a requirements interview. Your goal: 100% mutual understanding before writing any spec.
+
+## File Locations (CRITICAL)
+
+All skill files are located at:
+
+```bash
+SKILL_ROOT="${CLAUDE_PLUGIN_ROOT}/skills/spec-interview"
+```
+
+Use these ABSOLUTE paths:
+- Phase files: `${CLAUDE_PLUGIN_ROOT}/skills/spec-interview/phases/phase-{N}.md`
+- References: `${CLAUDE_PLUGIN_ROOT}/skills/spec-interview/references/*.md`
+- Scripts: `${CLAUDE_PLUGIN_ROOT}/skills/spec-interview/scripts/*.sh`
+
+**NEVER use relative paths like `phases/...` - always use full `${CLAUDE_PLUGIN_ROOT}/...` paths!**
+
+---
 
 ## Progress Tracking (CRITICAL)
 
@@ -45,16 +63,16 @@ Location: `.claude/spec-interviews/{spec_id}.md`
 
 ### 1. Start Interview
 
-Read `phases/phase-0-init.md` and follow its instructions.
+Read `${CLAUDE_PLUGIN_ROOT}/skills/spec-interview/phases/phase-0-init.md` and follow its instructions.
 
 ### 2. Phase Execution Pattern
 
 For EACH phase:
-1. Read the phase file from `phases/`
+1. Read the phase file using full path: `${CLAUDE_PLUGIN_ROOT}/skills/spec-interview/phases/phase-{N}.md`
 2. Ask questions ONE AT A TIME until 100% clear
 3. Save answers to state file
 4. Update progress checklist
-5. **IMMEDIATELY** read the next phase file
+5. **IMMEDIATELY** read the next phase file (using full path)
 6. Continue without waiting (unless phase says otherwise)
 
 ### 3. Never Stop Mid-Interview
@@ -65,20 +83,24 @@ Continue through all phases unless user explicitly requests a break.
 
 ## Phase Files
 
+Base path: `${CLAUDE_PLUGIN_ROOT}/skills/spec-interview/phases/`
+
 | Phase | File | Focus |
 |-------|------|-------|
-| 0 | `phases/phase-0-init.md` | Resume check, create state |
-| 0.5 | `phases/phase-0.5-calibrate.md` | Tech level, confirm understanding |
-| 1 | `phases/phase-1-problem.md` | Problem & Vision |
-| 2 | `phases/phase-2-users.md` | Users & Stakeholders |
-| 3 | `phases/phase-3-functional.md` | Functional Requirements |
-| 4 | `phases/phase-4-ui.md` | UI/UX Design |
-| 5 | `phases/phase-5-edge-cases.md` | Edge Cases & Errors |
-| 6 | `phases/phase-6-nfr.md` | Non-Functional Requirements |
-| 7 | `phases/phase-7-technical.md` | Technical Architecture |
-| 8 | `phases/phase-8-priority.md` | Prioritization & Phasing |
-| 9 | `phases/phase-9-validate.md` | Validation Checklist |
-| 10 | `phases/phase-10-output.md` | Write Spec Document |
+| 0 | `phase-0-init.md` | Resume check, create state |
+| 0.5 | `phase-0.5-calibrate.md` | Tech level, confirm understanding |
+| 1 | `phase-1-problem.md` | Problem & Vision |
+| 2 | `phase-2-users.md` | Users & Stakeholders |
+| 3 | `phase-3-functional.md` | Functional Requirements |
+| 4 | `phase-4-ui.md` | UI/UX Design |
+| 5 | `phase-5-edge-cases.md` | Edge Cases & Errors |
+| 6 | `phase-6-nfr.md` | Non-Functional Requirements |
+| 7 | `phase-7-technical.md` | Technical Architecture |
+| 8 | `phase-8-priority.md` | Prioritization & Phasing |
+| 9 | `phase-9-validate.md` | Validation Checklist |
+| 10 | `phase-10-output.md` | Write Spec Document |
+
+**Example:** To read Phase 1, use: `${CLAUDE_PLUGIN_ROOT}/skills/spec-interview/phases/phase-1-problem.md`
 
 ---
 
@@ -129,12 +151,14 @@ Auto-detect language from user's first message. If non-English:
 
 ## References
 
-- `references/spec-template.md` - Output document structure
-- `references/validation-checklist.md` - 14-category validation
-- `references/language-codes.md` - Language detection rules
+Base path: `${CLAUDE_PLUGIN_ROOT}/skills/spec-interview/references/`
+
+- `spec-template.md` - Output document structure
+- `validation-checklist.md` - 14-category validation
+- `language-codes.md` - Language detection rules
 
 ---
 
 ## START HERE
 
-**IMMEDIATELY read:** `phases/phase-0-init.md`
+**IMMEDIATELY read:** `${CLAUDE_PLUGIN_ROOT}/skills/spec-interview/phases/phase-0-init.md`

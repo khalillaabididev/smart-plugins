@@ -31,7 +31,7 @@ options:
 
 ## Step 2: Generate Spec Document
 
-Use the template from `references/spec-template.md`.
+Use the template from `${CLAUDE_PLUGIN_ROOT}/skills/spec-interview/references/spec-template.md`.
 
 ### Document Structure
 

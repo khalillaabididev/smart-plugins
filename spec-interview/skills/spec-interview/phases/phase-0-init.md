@@ -220,6 +220,6 @@ After completing all steps:
 
 ## NEXT STEP
 
-**IMMEDIATELY read:** `phases/phase-0.5-calibrate.md`
+**IMMEDIATELY read:** `${CLAUDE_PLUGIN_ROOT}/skills/spec-interview/phases/phase-0.5-calibrate.md`
 
 Do NOT wait for user input. Continue the interview flow.

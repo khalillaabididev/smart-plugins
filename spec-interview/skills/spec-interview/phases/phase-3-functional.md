@@ -128,4 +128,4 @@ Mark Phase 3 complete, Phase 4 in_progress.
 
 ## NEXT STEP
 
-**IMMEDIATELY read:** `phases/phase-4-ui.md`
+**IMMEDIATELY read:** `${CLAUDE_PLUGIN_ROOT}/skills/spec-interview/phases/phase-4-ui.md`

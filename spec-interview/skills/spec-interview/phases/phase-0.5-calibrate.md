@@ -145,6 +145,6 @@ Before proceeding, verify:
 
 ## NEXT STEP
 
-**IMMEDIATELY read:** `phases/phase-1-problem.md`
+**IMMEDIATELY read:** `${CLAUDE_PLUGIN_ROOT}/skills/spec-interview/phases/phase-1-problem.md`
 
 Do NOT wait for additional user input. The interview continues.

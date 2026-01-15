@@ -123,4 +123,4 @@ Mark Phase 5 complete, Phase 6 in_progress.
 
 ## NEXT STEP
 
-**IMMEDIATELY read:** `phases/phase-6-nfr.md`
+**IMMEDIATELY read:** `${CLAUDE_PLUGIN_ROOT}/skills/spec-interview/phases/phase-6-nfr.md`

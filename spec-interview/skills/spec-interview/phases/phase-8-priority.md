@@ -145,4 +145,4 @@ You've now gathered all requirements. Before writing the spec, validation is nee
 
 ## NEXT STEP
 
-**IMMEDIATELY read:** `phases/phase-9-validate.md`
+**IMMEDIATELY read:** `${CLAUDE_PLUGIN_ROOT}/skills/spec-interview/phases/phase-9-validate.md`
