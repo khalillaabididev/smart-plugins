@@ -1,16 +1,25 @@
 {
-  "hooks": [
-    {
-      "event": "PreToolUse",
-      "tools": ["Bash"],
-      "type": "command",
-      "command": "bash ${CLAUDE_PLUGIN_ROOT}/hooks/block-force-push.sh"
-    },
-    {
-      "event": "PreToolUse",
-      "tools": ["Bash", "Write"],
-      "type": "command",
-      "command": "bash ${CLAUDE_PLUGIN_ROOT}/hooks/protect-state-file.sh"
-    }
-  ]
+  "description": "Safety hooks for pr-patrol: blocks force push and protects state files",
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${CLAUDE_PLUGIN_ROOT}/hooks/block-force-push.sh"
+          }
+        ]
+      },
+      {
+        "matcher": "Bash|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${CLAUDE_PLUGIN_ROOT}/hooks/protect-state-file.sh"
+          }
+        ]
+      }
+    ]
+  }
 }
